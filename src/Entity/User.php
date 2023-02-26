@@ -1,16 +1,14 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
-use App\Repository\PlayerRepository;
+use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: PlayerRepository::class)]
+#[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ApiResource]
-class Player
+class User
 {
     use ResourceId;
     use Timestamps;
@@ -32,7 +30,7 @@ class Player
         $this->createdAt = new \DateTimeImmutable();
         $this->updatedAt = new \DateTimeImmutable();
     }
-
+    
     public function getFirstName(): ?string
     {
         return $this->firstName;
