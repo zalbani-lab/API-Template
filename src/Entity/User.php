@@ -2,13 +2,16 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ApiResource]
-class User
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     use ResourceId;
     use Timestamps;
@@ -19,18 +22,24 @@ class User
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $lastName = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $username = null;
 
+    #[ORM\Column(length: 255, unique: true)]
+    #[Assert\NotBlank(message: "email required")]
+    #[Assert\Email(message: "invalid format")]
+    private ?string $email = null;
+
     #[ORM\Column(length: 255)]
-    private ?string $mail = null;
+    #[Assert\NotBlank(message: "password required")]
+    private ?string $password = null;
 
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->updatedAt = new \DateTimeImmutable();
     }
-    
+
     public function getFirstName(): ?string
     {
         return $this->firstName;
@@ -67,15 +76,41 @@ class User
         return $this;
     }
 
-    public function getMail(): ?string
+    public function getEmail(): ?string
     {
-        return $this->mail;
+        return $this->email;
     }
 
-    public function setMail(string $mail): self
+    public function setEmail(string $email): self
     {
-        $this->mail = $mail;
+        $this->email = $email;
 
         return $this;
+    }
+
+    public function getPassword(): ?string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    public function getRoles(): array
+    {
+        return ['default'];
+    }
+    public function eraseCredentials(): void
+    {
+        return;
+    }
+
+    public function getUserIdentifier(): string
+    {
+        return $this->email;
     }
 }
