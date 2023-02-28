@@ -34,10 +34,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank(message: "password required")]
     private ?string $password = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $role = null;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->updatedAt = new \DateTimeImmutable();
+        $this->role = 'ROLE_PLAYER';
     }
 
     public function getFirstName(): ?string
@@ -102,7 +106,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getRoles(): array
     {
-        return ['default'];
+        return [$this->role];
     }
     public function eraseCredentials(): void
     {
@@ -111,6 +115,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getUserIdentifier(): string
     {
-        return $this->email;
+        return $this->username;
+    }
+
+    public function getRole(): ?string
+    {
+        return $this->role;
+    }
+
+    public function setRole(string $role): self
+    {
+        $this->role = $role;
+
+        return $this;
     }
 }

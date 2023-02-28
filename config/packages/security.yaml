@@ -7,7 +7,7 @@ security:
     users:
       entity:
         class: App\Entity\User
-        property: email
+        property: username
   firewalls:
     dev:
       pattern: ^/_(profiler|wdt)
@@ -18,14 +18,22 @@ security:
       provider: users
       json_login:
         check_path: auth # The name in routes.yaml is enough for mapping
-        username_path: email
+        username_path: username
         password_path: password
         success_handler: lexik_jwt_authentication.handler.authentication_success
         failure_handler: lexik_jwt_authentication.handler.authentication_failure
       jwt: ~
 
-  # Easy way to control access for large sections of your site
-  # Note: Only the *first* access control that matches will be used
+  role_hierarchy:
+    ROLE_PLAYER: ROLE_USER
+    ROLE_GAME_MASTER: [ROLE_PLAYER]
+    ROLE_ADMIN: [ROLE_GAME_MASTER]
+
   access_control:
+    - {
+        path: ^/api/users,
+        roles: ROLE_ADMIN,
+        methods: [GET, PUT, PATCH, DELETE],
+      }
     # - { path: ^/admin, roles: ROLE_ADMIN }
     # - { path: ^/profile, roles: ROLE_USER }
