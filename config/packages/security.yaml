@@ -32,7 +32,7 @@ security:
   access_control:
     - {
         path: ^/api/users,
-        roles: ROLE_ADMIN,
+        roles: IS_AUTHENTICATED_FULLY,
         methods: [GET, PUT, PATCH, DELETE],
       }
     # - { path: ^/admin, roles: ROLE_ADMIN }
