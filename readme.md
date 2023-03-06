@@ -91,14 +91,21 @@ $ symfony serve
 
 ### 🎈 How to use
 
-1. Create new entities
+1. Create entity
 
 ```sh
-# Create entity
 $ php bin/console make:entity
-# Create db migration
+```
+
+2. Create database migration
+
+```sh
 $ php bin/console make:migration
-# Execute db migration
+```
+
+3. Execute migration
+
+```sh
 $ php bin/console doctrine:migrations:migrate
 ```
 
@@ -115,13 +122,9 @@ $ php bin/console doctrine:migrations:migrate
 - [ ] Add postman endpoints collection
 - [ ] Integration of tools to validate the quality of the code
 
-<!--
 ## 📝 License <a name = "license"></a>
 
-Describe your License for your project.
-
 Distributed under the MIT License. See `LICENSE` for more information.
--->
 
 ## ✍️ Authors <a name = "authors"></a>
 
