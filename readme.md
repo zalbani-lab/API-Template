@@ -122,9 +122,13 @@ $ php bin/console doctrine:migrations:migrate
 - [ ] Add postman endpoints collection
 - [ ] Integration of tools to validate the quality of the code
 
+<!--
 ## 📝 License <a name = "license"></a>
 
+Describe your License for your project.
+
 Distributed under the MIT License. See `LICENSE` for more information.
+-->
 
 ## ✍️ Authors <a name = "authors"></a>
 
